@@ -1,0 +1,306 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Desafio 2 Ignite Rocketseat",
+    "description": "Api construida para o desafio complementar do ignite - capítulo 2",
+    "version": "1.0.0",
+    "contact": {
+      "email": "matheusms280100@gmail.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Create User",
+        "description": "Create a new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Martins",
+                  "email": "email@email.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "name": "Martins",
+                    "email": "email@email.com"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email já está sendo utilizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "This email is already in use."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Return all users",
+        "description": "Just admin user can access",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "id_user",
+            "schema": {
+              "type": "string (uuid)"
+            },
+            "label": "teste",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "Date",
+                        "example": "2020-11-13T12:37:05.637Z"
+                      },
+                      "updated_at": {
+                        "type": "date",
+                        "example": "2020-11-13T12:37:05.637Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bad request or User without permisson",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "You need to be an admin"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Return an specific user",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "id_user",
+            "schema": {
+              "type": "string (uuid)"
+            },
+            "label": "teste",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "Date",
+                        "example": "2020-11-13T12:37:05.637Z"
+                      },
+                      "updated_at": {
+                        "type": "date",
+                        "example": "2020-11-13T12:37:05.637Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bad request or User without permisson",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "You need to be an admin"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Promote user to admin",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "id_user",
+            "schema": {
+              "type": "string (uuid)"
+            },
+            "label": "teste",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "Date",
+                        "example": "2020-11-13T12:37:05.637Z"
+                      },
+                      "updated_at": {
+                        "type": "date",
+                        "example": "2020-11-13T12:37:05.637Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bad request or User without permisson",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "You need to be an admin"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
